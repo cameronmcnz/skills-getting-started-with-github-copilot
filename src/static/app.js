@@ -1,8 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Check if user is logged in
+  if (sessionStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "login.html";
+    return;
+  }
+
   const activitiesList = document.getElementById("activities-list");
   const activitySelect = document.getElementById("activity");
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
+  const logoutBtn = document.getElementById("logout-btn");
 
   // Function to fetch activities from API
   async function fetchActivities() {
@@ -115,6 +122,14 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error signing up:", error);
     }
   });
+
+  // Handle logout
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      sessionStorage.removeItem("isLoggedIn");
+      window.location.href = "login.html";
+    });
+  }
 
   // Initialize app
   fetchActivities();
